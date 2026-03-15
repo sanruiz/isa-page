@@ -18,4 +18,6 @@ export interface Painting {
   accent: string;
   /** Path to painting image (e.g., "/paintings/pensamientos-i.png") */
   image?: string;
+  /** Aspect ratio: "square" (default), "landscape", or "portrait" */
+  aspect?: "square" | "landscape" | "portrait";
 }

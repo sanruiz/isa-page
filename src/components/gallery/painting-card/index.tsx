@@ -1,10 +1,11 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import type { Painting } from "@/types";
 
 interface PaintingCardProps {
   /** Painting data to display */
   painting: Painting;
-  /** Whether to span two columns */
+  /** Whether to span two columns (legacy, use aspect instead) */
   isWide?: boolean;
 }
 
@@ -16,10 +17,21 @@ export default function PaintingCard({
   painting,
   isWide = false,
 }: PaintingCardProps) {
-  const { title, series, medium, size, color, accent, image } = painting;
+  const { title, series, medium, size, color, accent, image, aspect } =
+    painting;
+
+  // Determine CSS class based on aspect ratio
+  const aspectClass =
+    aspect === "landscape"
+      ? "landscape"
+      : aspect === "portrait"
+        ? "portrait"
+        : isWide
+          ? "wide"
+          : "";
 
   return (
-    <div className={`painting-card${isWide ? " wide" : ""}`}>
+    <div className={cn("painting-card", aspectClass)}>
       {/* Gradient background - always visible as placeholder/loading state */}
       <div
         className="painting-swatch"
@@ -43,7 +55,7 @@ export default function PaintingCard({
           alt={title}
           fill
           sizes={
-            isWide
+            aspect === "landscape" || isWide
               ? "(max-width: 768px) 100vw, 50vw"
               : "(max-width: 768px) 50vw, 25vw"
           }

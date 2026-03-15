@@ -334,6 +334,15 @@ nav.scrolled {
   aspect-ratio: 2/1;
 }
 
+.painting-card.landscape {
+  grid-column: span 2;
+  aspect-ratio: 2/1;
+}
+
+.painting-card.portrait {
+  grid-row: span 2;
+  aspect-ratio: 1/2;
+}
 .painting-swatch {
   position: absolute;
   inset: 0;
@@ -688,10 +697,21 @@ footer {
   }
 
   .gallery-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     padding: 0 1rem;
   }
 
+        .painting-card.wide,
+        .painting-card.landscape {
+          grid-column: span 2;
+          aspect-ratio: 2/1;
+        }
+    
+        .painting-card.portrait {
+          grid-column: span 1;
+          grid-row: span 2;
+          aspect-ratio: 1/2;
+        }
   .gallery-header {
     padding: 0 1rem 1.5rem;
   }
@@ -709,11 +729,6 @@ footer {
 
   footer {
     padding: 1.5rem;
-  }
-
-  .painting-card.wide {
-    grid-column: span 1;
-    aspect-ratio: 1;
   }
 
   .section-divider {

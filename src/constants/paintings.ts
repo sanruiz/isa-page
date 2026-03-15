@@ -10,6 +10,7 @@ export const paintings: Painting[] = [
     color: "#7ab870",
     accent: "#3a5020",
     image: "/paintings/en-la-memoria-iv-detail.png",
+    aspect: "landscape",
   },
   {
     id: 2,
