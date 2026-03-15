@@ -1,4 +1,4 @@
-import type { Painting } from "@/constants/paintings";
+import type { Painting } from "@/types";
 
 interface PaintingCardProps {
   /** Painting data to display */

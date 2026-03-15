@@ -1,12 +1,4 @@
-export interface Painting {
-  id: number;
-  title: string;
-  series: string;
-  size: string;
-  medium: string;
-  color: string;
-  accent: string;
-}
+import { Painting } from "@/types";
 
 export const paintings: Painting[] = [
   {
