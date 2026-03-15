@@ -404,6 +404,108 @@ export const globalStyles = `
     color: var(--ink);
   }
 
+  /* EXHIBITIONS SECTION */
+  .exhibitions-section {
+    margin: 5rem 3rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--border);
+  }
+  .exhibitions-header {
+    margin-bottom: 3rem;
+  }
+  .exhibitions-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .exhibitions-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .exhibitions-title em {
+    font-style: italic;
+  }
+  .exhibitions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+  .exhibition-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 2rem;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .exhibition-card:nth-child(2n) {
+    border-right: none;
+  }
+  .exhibition-card:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+  .exhibition-date {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    flex-shrink: 0;
+    min-width: 4.5rem;
+  }
+  .exhibition-month {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,20,16,0.5);
+  }
+  .exhibition-year {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--terracotta);
+    line-height: 1.2;
+  }
+  .exhibition-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .exhibition-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .exhibition-venue {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(26,20,16,0.65);
+    line-height: 1.4;
+  }
+  .exhibition-badge {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--terracotta);
+    width: fit-content;
+  }
+
   /* FOOTER */
   footer {
     padding: 2rem 3rem;
@@ -454,5 +556,10 @@ export const globalStyles = `
     footer { padding: 1.5rem; }
     .painting-card.wide { grid-column: span 1; aspect-ratio: 1; }
     .section-divider { padding: 2.5rem 1.5rem; }
+    .exhibitions-section { margin: 3rem 1.5rem; padding-top: 2.5rem; }
+    .exhibitions-grid { grid-template-columns: 1fr; }
+    .exhibition-card { border-right: none; }
+    .exhibition-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .exhibition-card:last-child { border-bottom: none; }
   }
 `;
