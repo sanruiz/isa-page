@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Painting } from "@/types";
 
 interface PaintingCardProps {
@@ -15,12 +16,15 @@ export default function PaintingCard({
   painting,
   isWide = false,
 }: PaintingCardProps) {
+  const { title, series, medium, size, color, accent, image } = painting;
+
   return (
     <div className={`painting-card${isWide ? " wide" : ""}`}>
+      {/* Gradient background - always visible as placeholder/loading state */}
       <div
         className="painting-swatch"
         style={{
-          background: `radial-gradient(ellipse at 40% 40%, ${painting.color} 0%, ${painting.accent}55 100%)`,
+          background: `radial-gradient(ellipse at 40% 40%, ${color} 0%, ${accent}55 100%)`,
         }}
       />
       {/* Texture overlay */}
@@ -32,11 +36,25 @@ export default function PaintingCard({
           backgroundSize: "4px 4px",
         }}
       />
+      {/* Image loads on top of gradient */}
+      {image && (
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes={
+            isWide
+              ? "(max-width: 768px) 100vw, 50vw"
+              : "(max-width: 768px) 50vw, 25vw"
+          }
+          className="object-cover"
+        />
+      )}
       <div className="painting-overlay">
-        <div className="painting-series">{painting.series}</div>
-        <div className="painting-name">{painting.title}</div>
+        <div className="painting-series">{series}</div>
+        <div className="painting-name">{title}</div>
         <div className="painting-meta">
-          {painting.medium} · {painting.size}
+          {medium} · {size}
         </div>
       </div>
     </div>
