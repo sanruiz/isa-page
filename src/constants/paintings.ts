@@ -1,0 +1,146 @@
+export interface Painting {
+  id: number;
+  title: string;
+  series: string;
+  size: string;
+  medium: string;
+  color: string;
+  accent: string;
+}
+
+export const paintings: Painting[] = [
+  {
+    id: 1,
+    title: "Orquídeas",
+    series: "Botanica",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#f0c040",
+    accent: "#6b3fa0",
+  },
+  {
+    id: 2,
+    title: "Pensamientos I",
+    series: "Pensamientos",
+    size: "12×12 in",
+    medium: "Oil on canvas",
+    color: "#c47fc0",
+    accent: "#f5e0a0",
+  },
+  {
+    id: 3,
+    title: "Pensamientos II",
+    series: "Pensamientos",
+    size: "12×12 in",
+    medium: "Oil on canvas",
+    color: "#f0a030",
+    accent: "#e05080",
+  },
+  {
+    id: 4,
+    title: "Labios",
+    series: "Figura",
+    size: "10×10 in",
+    medium: "Oil on canvas",
+    color: "#e8a0a0",
+    accent: "#c05060",
+  },
+  {
+    id: 5,
+    title: "En la Memoria I",
+    series: "En la Memoria",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#7ab870",
+    accent: "#ffffff",
+  },
+  {
+    id: 6,
+    title: "En la Memoria II",
+    series: "En la Memoria",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#f0d060",
+    accent: "#2a5a2a",
+  },
+  {
+    id: 7,
+    title: "En la Memoria III",
+    series: "En la Memoria",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#e080b0",
+    accent: "#3a2060",
+  },
+  {
+    id: 8,
+    title: "Copetón",
+    series: "En la Memoria",
+    size: "12×12 in",
+    medium: "Oil on wood",
+    color: "#c8a870",
+    accent: "#3a5020",
+  },
+  {
+    id: 9,
+    title: "Sparrow",
+    series: "En la Memoria",
+    size: "12×12 in",
+    medium: "Oil on wood",
+    color: "#b09070",
+    accent: "#4a6030",
+  },
+  {
+    id: 10,
+    title: "Pensamientos III",
+    series: "Pensamientos",
+    size: "12×12 in",
+    medium: "Oil on canvas",
+    color: "#e8702a",
+    accent: "#c03020",
+  },
+  {
+    id: 11,
+    title: "Pensamientos IV",
+    series: "Pensamientos",
+    size: "12×12 in",
+    medium: "Oil on canvas",
+    color: "#e05030",
+    accent: "#f0a040",
+  },
+  {
+    id: 12,
+    title: "Pensamientos V",
+    series: "Pensamientos",
+    size: "12×12 in",
+    medium: "Oil on canvas",
+    color: "#8040a0",
+    accent: "#f0d050",
+  },
+  {
+    id: 13,
+    title: "Botanica I",
+    series: "Botanica",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#508850",
+    accent: "#f0f0f0",
+  },
+  {
+    id: 14,
+    title: "Botanica II",
+    series: "Botanica",
+    size: "16×20 in",
+    medium: "Oil on canvas",
+    color: "#407040",
+    accent: "#e03040",
+  },
+];
+
+export const series = [
+  "All",
+  "Pensamientos",
+  "En la Memoria",
+  "Botanica",
+  "Figura",
+];
