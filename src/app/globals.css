@@ -1,4 +1,6 @@
-/* Base reset - page.tsx handles all custom styling */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+
+/* Base Reset */
 *,
 *::before,
 *::after {
@@ -7,6 +9,17 @@
   padding: 0;
 }
 
+/* CSS Variables */
+:root {
+  --cream: #faf6f0;
+  --warm-white: #f5f0e8;
+  --ink: #1a1410;
+  --gold: #c8902a;
+  --terracotta: #c0502a;
+  --sage: #5a7a50;
+  --mauve: #8a5070;
+  --border: rgba(26, 20, 16, 0.12);
+}
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -15,7 +28,716 @@ html {
 }
 
 body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
   min-height: 100vh;
-    margin: 0;
-    padding: 0;
 }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 3rem;
+  transition: all 0.4s ease;
+  mix-blend-mode: multiply;
+}
+
+nav.scrolled {
+  background: rgba(250, 246, 240, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  mix-blend-mode: normal;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 3rem 5rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--mauve);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(26, 20, 16, 0.6);
+  line-height: 1.6;
+  max-width: 380px;
+  margin-bottom: 3rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.5rem;
+  width: fit-content;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.hero-cta:hover {
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+}
+
+.hero-cta-arrow {
+  font-size: 1rem;
+  transition: transform 0.3s;
+}
+
+.hero-cta:hover .hero-cta-arrow {
+  transform: translateX(6px);
+}
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-mosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 3px;
+}
+
+.mosaic-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.mosaic-cell:first-child {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+}
+
+.mosaic-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+.mosaic-cell:hover .mosaic-bg {
+  transform: scale(1.05);
+}
+
+.hero-stat-bar {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 3;
+}
+
+.hero-stat {
+  text-align: right;
+}
+
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: white;
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* DIVIDER */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 3rem;
+  border-top: 1px solid var(--border);
+}
+
+.divider-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 400;
+  color: rgba(26, 20, 16, 0.06);
+  line-height: 1;
+}
+
+/* FILTER */
+.gallery-header {
+  padding: 0 3rem 2rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink);
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+
+.filter-tab.active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+  opacity: 1;
+}
+
+.filter-tab:hover:not(.active) {
+  opacity: 1;
+}
+
+/* GALLERY GRID */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  padding: 0 3rem;
+}
+
+.painting-card {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--warm-white);
+}
+
+.painting-card.wide {
+  grid-column: span 2;
+  aspect-ratio: 2/1;
+}
+
+.painting-swatch {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s ease;
+}
+
+.painting-card:hover .painting-swatch {
+  transform: scale(1.04);
+}
+
+.painting-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.painting-card:hover .painting-overlay {
+  opacity: 1;
+}
+
+.painting-series {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 0.3rem;
+}
+
+.painting-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: white;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+
+.painting-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+/* ABOUT STRIP */
+.about-strip {
+  margin: 5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 4rem;
+}
+
+.about-label {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.about-label em {
+  font-style: italic;
+  color: var(--mauve);
+}
+
+.about-body {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(26, 20, 16, 0.75);
+  font-style: italic;
+}
+
+.about-body strong {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.about-details {
+  margin-top: 2rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.about-detail-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.about-detail-value {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+/* CONTACT BANNER */
+.contact-banner {
+  margin: 2rem 3rem 6rem;
+  padding: 4rem;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+}
+
+.contact-text em {
+  color: var(--gold);
+}
+
+.contact-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--cream);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.contact-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+/* EXHIBITIONS SECTION */
+.exhibitions-section {
+  margin: 5rem 3rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--border);
+}
+
+.exhibitions-header {
+  margin-bottom: 3rem;
+}
+
+.exhibitions-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.exhibitions-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.exhibitions-title em {
+  font-style: italic;
+}
+
+.exhibitions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+.exhibition-card {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 2rem;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.exhibition-card:nth-child(2n) {
+  border-right: none;
+}
+
+.exhibition-card:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.exhibition-date {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  flex-shrink: 0;
+  min-width: 4.5rem;
+}
+
+.exhibition-month {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(26, 20, 16, 0.5);
+}
+
+.exhibition-year {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--terracotta);
+  line-height: 1.2;
+}
+
+.exhibition-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.exhibition-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.exhibition-venue {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(26, 20, 16, 0.65);
+  line-height: 1.4;
+}
+
+.exhibition-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--terracotta);
+  width: fit-content;
+}
+
+/* FOOTER */
+footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease both;
+}
+
+.fade-up-1 {
+  animation-delay: 0.1s;
+}
+
+.fade-up-2 {
+  animation-delay: 0.25s;
+}
+
+.fade-up-3 {
+  animation-delay: 0.4s;
+}
+
+.fade-up-4 {
+  animation-delay: 0.55s;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-right {
+    height: 50vw;
+  }
+
+  .hero-left {
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 1rem;
+  }
+
+  .gallery-header {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .about-strip {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 3rem 1.5rem;
+  }
+
+  .contact-banner {
+    margin: 1.5rem;
+    padding: 2.5rem;
+  }
+
+  footer {
+    padding: 1.5rem;
+  }
+
+  .painting-card.wide {
+    grid-column: span 1;
+    aspect-ratio: 1;
+  }
+
+  .section-divider {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .exhibitions-section {
+    margin: 3rem 1.5rem;
+    padding-top: 2.5rem;
+  }
+
+  .exhibitions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exhibition-card {
+    border-right: none;
+  }
+
+  .exhibition-card:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+    .exhibition-card:last-child {
+      border-bottom: none;
+    }
+    }
