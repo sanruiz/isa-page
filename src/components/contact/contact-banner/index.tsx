@@ -1,14 +1,17 @@
 interface ContactBannerProps {
   /** Email address for contact link */
   email?: string;
+  /** Instagram URL */
+  instagram?: string;
 }
 
 /**
  * Contact call-to-action banner
- * Server Component - static content with optional email
+ * Server Component - static content with optional email and social links
  */
 export default function ContactBanner({
-  email = "hello@isabellaramirez.art",
+  email = "info@isaartstudio.com",
+  instagram = "https://www.instagram.com/artsalyy/",
 }: ContactBannerProps) {
   return (
     <div id="contact" className="contact-banner">
@@ -17,9 +20,19 @@ export default function ContactBanner({
         <br />
         <em>commission?</em>
       </div>
-      <a href={`mailto:${email}`} className="contact-btn">
-        Get in Touch →
-      </a>
+      <div className="contact-links">
+        <a href={`mailto:${email}`} className="contact-btn">
+          Get in Touch →
+        </a>
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contact-social"
+        >
+          @artsalyy
+        </a>
+      </div>
     </div>
   );
 }

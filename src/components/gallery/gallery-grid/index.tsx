@@ -34,12 +34,8 @@ export default function Gallery() {
       </div>
 
       <div className="gallery-grid">
-        {filtered.map((p, i) => (
-          <PaintingCard
-            key={p.id}
-            painting={p}
-            isWide={i === 0 && activeSeries === "All"}
-          />
+        {filtered.map((p) => (
+          <PaintingCard key={p.id} painting={p} />
         ))}
       </div>
     </section>

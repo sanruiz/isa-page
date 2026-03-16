@@ -64,3 +64,6 @@ Use **kebab-case** for all painting image files:
 - [x] `pensamientos-iii.png` - Pensamientos III (12×12 in, Oil on wood panel)
 - [x] `pensamientos-iv.png` - Pensamientos IV (6×6 in, Oil on wood panel)
 - [x] `pensamientos-v.png` - Pensamientos V (8×8 in, Oil on wood panel)
+- [x] `copeton.png` - Copetón (8×8 in, Oil on wood)
+- [x] `sparrow.png` - Sparrow (8×8 in, Oil on wood panel)
+- [x] `en-la-memoria-v.jpg` - En la Memoria V (8×8 in, Oil on wood panel)

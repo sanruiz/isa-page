@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * Hero section with artist intro and color mosaic
  * Server Component - no interactivity needed
@@ -15,8 +17,8 @@ export default function Hero() {
           <em>Ramírez</em>
         </h1>
         <p className="hero-subtitle fade-up fade-up-3">
-          Painting the quiet intensity of flowers, memory, and the natural
-          world — one brushstroke at a time.
+          Painting the quiet intensity of flowers, memory, and the natural world
+          — one brushstroke at a time.
         </p>
         <a href="#gallery" className="hero-cta fade-up fade-up-4">
           Explore Works <span className="hero-cta-arrow">→</span>
@@ -25,50 +27,89 @@ export default function Hero() {
 
       <div className="hero-right">
         <div className="hero-mosaic">
+          <div
+            className="mosaic-cell"
+            style={{
+              background: `linear-gradient(135deg, #e8702a 0%, #c03020 40%, #8040a0 100%)`,
+            }}
+          >
+            <Image
+              src="/hero/hero1.jpeg"
+              alt="Isabella Ramírez artwork"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
+          </div>
           <div className="mosaic-cell">
+            <Image
+              src="/hero/hero2.jpeg"
+              alt="Isabella Ramírez artwork"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
             <div
               className="mosaic-bg"
               style={{
-                background: `linear-gradient(135deg, #e8702a 0%, #c03020 40%, #8040a0 100%)`,
+                background: `linear-gradient(135deg, rgba(196, 127, 192, 0.8) 0%, rgba(128, 64, 160, 0.8) 100%)`,
               }}
             />
           </div>
           <div className="mosaic-cell">
+            <Image
+              src="/hero/hero3.jpg"
+              alt="Isabella Ramírez artwork"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
             <div
               className="mosaic-bg"
               style={{
-                background: `linear-gradient(135deg, #c47fc0 0%, #8040a0 100%)`,
+                background: `linear-gradient(135deg, rgba(240, 192, 64, 0.8) 0%, rgba(200, 144, 42, 0.8) 100%)`,
               }}
             />
           </div>
           <div className="mosaic-cell">
+            <Image
+              src="/hero/hero5.jpg"
+              alt="Isabella Ramírez artwork"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
             <div
               className="mosaic-bg"
               style={{
-                background: `linear-gradient(135deg, #f0c040 0%, #c8902a 100%)`,
+                background: `linear-gradient(135deg, rgba(80, 136, 80, 0.8) 0%, rgba(42, 90, 42, 0.8) 100%)`,
               }}
             />
           </div>
           <div className="mosaic-cell">
-            <div
-              className="mosaic-bg"
-              style={{
-                background: `linear-gradient(135deg, #508850 0%, #2a5a2a 100%)`,
-              }}
+            <Image
+              src="/hero/hero4.jpg"
+              alt="Isabella Ramírez artwork"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
             />
-          </div>
-          <div className="mosaic-cell">
             <div
               className="mosaic-bg"
               style={{
-                background: `linear-gradient(135deg, #e8a0a0 0%, #c05060 100%)`,
+                background: `linear-gradient(135deg, rgba(232, 160, 160, 0.8) 0%, rgba(192, 80, 96, 0.8) 100%)`,
               }}
             />
           </div>
         </div>
         <div className="hero-stat-bar">
           <div className="hero-stat">
-            <div className="hero-stat-num">14+</div>
+            <div className="hero-stat-num">30+</div>
             <div className="hero-stat-label">Works</div>
           </div>
           <div className="hero-stat">

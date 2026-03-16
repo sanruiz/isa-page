@@ -9,6 +9,12 @@ export default function Footer() {
       <div className="footer-copy">
         © {new Date().getFullYear()} All rights reserved
       </div>
+      <div className="footer-signature">
+        Made with ❤️ by{" "}
+        <a href="https://sanruiz.co" target="_blank" rel="noopener noreferrer">
+          sanruiz.co
+        </a>
+      </div>
     </footer>
   );
 }

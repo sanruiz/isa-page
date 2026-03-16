@@ -186,8 +186,14 @@ nav.scrolled {
 .mosaic-cell {
   position: relative;
   overflow: hidden;
+  
 }
 
+.mosaic-cell img {
+  object-fit: cover;
+
+
+}
 .mosaic-cell:first-child {
   grid-column: 1 / 3;
   grid-row: 1 / 2;
@@ -205,12 +211,15 @@ nav.scrolled {
 
 .hero-stat-bar {
   position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  bottom: 0;
+    right: 0;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   z-index: 3;
+  /* background: linear-gradient(to left, rgba(0, 0, 0, 0.45), transparent); */
+    padding: 1.1rem 2rem;
+    border-radius: 4px;
 }
 
 .hero-stat {
@@ -497,6 +506,28 @@ nav.scrolled {
   color: var(--ink);
 }
 
+.contact-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-social {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.contact-social:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
 /* EXHIBITIONS SECTION */
 .exhibitions-section {
   margin: 5rem 3rem;
@@ -640,6 +671,24 @@ footer {
   opacity: 0.4;
 }
 
+.footer-signature {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+.footer-signature a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-signature a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 /* ANIMATIONS */
 @keyframes fadeUp {
   from {
@@ -681,11 +730,12 @@ footer {
   }
 
   .hero-right {
-    height: 50vw;
+    height: 95vw;
   }
 
   .hero-left {
     padding: 6rem 1.5rem 3rem;
+        height: 100vw;
   }
 
   nav {
