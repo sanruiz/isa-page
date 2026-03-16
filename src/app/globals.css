@@ -186,7 +186,6 @@ nav.scrolled {
 .mosaic-cell {
   position: relative;
   overflow: hidden;
-  
 }
 
 .mosaic-cell img {
@@ -239,7 +238,7 @@ nav.scrolled {
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* DIVIDER */
@@ -515,7 +514,7 @@ nav.scrolled {
 
 .contact-social {
   font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   letter-spacing: 0.1em;
   color: var(--cream);
   text-decoration: none;

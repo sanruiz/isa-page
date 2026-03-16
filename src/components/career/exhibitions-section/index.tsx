@@ -1,11 +1,11 @@
-
 /**
  * Exhibitions section displaying career exhibitions timeline
  * Server Component - static content
  */
 
-
 import { exhibitions } from "@/constants";
+import UpcomingBadgeClient from "./upcoming-badge-client";
+import type { Exhibition } from "@/types";
 
 export default function ExhibitionsSection() {
   return (
@@ -17,36 +17,40 @@ export default function ExhibitionsSection() {
         </h2>
       </div>
       <div className="exhibitions-grid">
-        {exhibitions.map((exhibition, index) => {
-                  const now = new Date();
-                  const currentMonth = now.getMonth();
-                  const currentYear = now.getFullYear();
+        {exhibitions.map((exhibition: Exhibition, index) => {
+          // Use the stable, developer-provided `isUpcoming` flag for SSR output.
+          // If `isUpcoming` is undefined, defer the time-based computation to the
+          // client-only component to avoid SSR/CSR hydration mismatches.
+          const { isUpcoming } = exhibition;
 
-                  const monthIndex = new Date(`${exhibition.month} 1, 2000`).getMonth();
-                  const exhibitionYear = Number(exhibition.year);
+          return (
+            <article key={index} className="exhibition-card">
+              <div className="exhibition-date">
+                <span className="exhibition-month">{exhibition.month}</span>
+                <span className="exhibition-year">{exhibition.year}</span>
+              </div>
+              <div className="exhibition-content">
+                <h3 className="exhibition-name">
+                  &ldquo;{exhibition.title}&rdquo;
+                </h3>
+                <p className="exhibition-venue">
+                  {exhibition.venue} · {exhibition.location}
+                </p>
 
-                  const isUpcoming =
-                    exhibitionYear > currentYear ||
-                    (exhibitionYear === currentYear && monthIndex >= currentMonth);
-
-                  return (
-                    <article key={index} className="exhibition-card">
-                      <div className="exhibition-date">
-                        <span className="exhibition-month">{exhibition.month}</span>
-                        <span className="exhibition-year">{exhibition.year}</span>
-                      </div>
-                      <div className="exhibition-content">
-                        <h3 className="exhibition-name">&ldquo;{exhibition.title}&rdquo;</h3>
-                        <p className="exhibition-venue">
-                          {exhibition.venue} · {exhibition.location}
-                        </p>
-                        {isUpcoming && (
-                          <span className="exhibition-badge">Upcoming</span>
-                        )}
-                      </div>
-                    </article>
-                  );
-                })}
+                {isUpcoming ? (
+                  // Stable server-rendered badge when data explicitly marks it upcoming
+                  <span className="exhibition-badge">Upcoming</span>
+                ) : exhibition.isUpcoming === undefined ? (
+                  // Defer dynamic, time-based decision to a client-only component
+                  <UpcomingBadgeClient
+                    year={exhibition.year}
+                    month={exhibition.month}
+                  />
+                ) : null}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
