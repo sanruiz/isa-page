@@ -6,10 +6,8 @@ import { cn } from "@/lib/utils";
 import type { Painting } from "@/types";
 
 interface LightboxProps {
-  /** The painting to display in the lightbox */
+  /** The painting to display in the lightbox (null = closed) */
   painting: Painting | null;
-  /** Whether the lightbox is open */
-  isOpen: boolean;
   /** Callback to close the lightbox */
   onClose: () => void;
 }
@@ -18,11 +16,10 @@ interface LightboxProps {
  * Lightbox modal for displaying painting details
  * Client Component - handles modal state and interactions
  */
-export default function Lightbox({
-  painting,
-  isOpen,
-  onClose,
-}: LightboxProps) {
+export default function Lightbox({ painting, onClose }: LightboxProps) {
+  // Derive isOpen from painting - single source of truth
+  const isOpen = painting !== null;
+
   // Handle escape key to close
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -30,7 +27,7 @@ export default function Lightbox({
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
 
   // Handle body scroll lock
@@ -60,10 +57,7 @@ export default function Lightbox({
       aria-modal="true"
       aria-label={`Painting: ${title}`}
     >
-      <div
-        className="lightbox-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
         {/* Close button */}
         <button
           className="lightbox-close"

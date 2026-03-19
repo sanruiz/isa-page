@@ -15,7 +15,6 @@ export default function Gallery() {
   const [selectedPainting, setSelectedPainting] = useState<Painting | null>(
     null,
   );
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const filtered =
     activeSeries === "All"
@@ -24,11 +23,10 @@ export default function Gallery() {
 
   const handlePaintingClick = (painting: Painting) => {
     setSelectedPainting(painting);
-    setIsLightboxOpen(true);
   };
 
   const handleCloseLightbox = () => {
-    setIsLightboxOpen(false);
+    setSelectedPainting(null);
   };
 
   return (
@@ -58,11 +56,7 @@ export default function Gallery() {
         ))}
       </div>
 
-      <Lightbox
-        painting={selectedPainting}
-        isOpen={isLightboxOpen}
-        onClose={handleCloseLightbox}
-      />
+      <Lightbox painting={selectedPainting} onClose={handleCloseLightbox} />
     </section>
   );
 }
