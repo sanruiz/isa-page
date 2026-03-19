@@ -7,6 +7,8 @@ interface PaintingCardProps {
   painting: Painting;
   /** Whether to span two columns (legacy, use aspect instead) */
   isWide?: boolean;
+  /** Click handler for opening lightbox */
+  onClick?: () => void;
 }
 
 /**
@@ -16,6 +18,7 @@ interface PaintingCardProps {
 export default function PaintingCard({
   painting,
   isWide = false,
+  onClick,
 }: PaintingCardProps) {
   const { title, series, medium, size, color, accent, image, aspect } =
     painting;
@@ -31,7 +34,22 @@ export default function PaintingCard({
           : "";
 
   return (
-    <div className={cn("painting-card", aspectClass)}>
+    <div
+      className={cn("painting-card", aspectClass)}
+      onClick={onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onClick();
+              }
+            }
+          : undefined
+      }
+    >
       {/* Gradient background - always visible as placeholder/loading state */}
       <div
         className="painting-swatch"

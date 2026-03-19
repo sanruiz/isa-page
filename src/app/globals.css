@@ -805,3 +805,129 @@ footer {
       border-bottom: none;
     }
     }
+/* LIGHTBOX */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 2rem;
+}
+
+.lightbox-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: lightbox-enter 0.3s ease;
+}
+
+@keyframes lightbox-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.lightbox-close:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+.lightbox-image-container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  background: transparent;
+}
+
+.lightbox-image-container img {
+  object-fit: contain !important;
+}
+
+.lightbox-swatch {
+  position: absolute;
+  inset: 0;
+}
+
+.lightbox-texture {
+  position: absolute;
+  inset: 0;
+  background-size: 4px 4px;
+}
+
+.lightbox-info {
+  padding: 1.5rem 0;
+  background: transparent;
+  text-align: center;
+}
+
+.lightbox-series {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.lightbox-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: white;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.lightbox-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 768px) {
+  .lightbox-content {
+    max-width: 80vw;
+  }
+
+  .lightbox-image-container {
+    height: 70vh;
+  }
+
+  .lightbox-info {
+    padding: 2rem 0;
+  }
+}

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { paintings, series } from "@/constants/paintings";
 import PaintingCard from "@/components/gallery/painting-card";
+import Lightbox from "@/components/gallery/lightbox";
+import type { Painting } from "@/types";
 
 /**
  * Gallery section with filterable painting grid
@@ -10,11 +12,24 @@ import PaintingCard from "@/components/gallery/painting-card";
  */
 export default function Gallery() {
   const [activeSeries, setActiveSeries] = useState("All");
+  const [selectedPainting, setSelectedPainting] = useState<Painting | null>(
+    null,
+  );
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const filtered =
     activeSeries === "All"
       ? paintings
       : paintings.filter((p) => p.series === activeSeries);
+
+  const handlePaintingClick = (painting: Painting) => {
+    setSelectedPainting(painting);
+    setIsLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setIsLightboxOpen(false);
+  };
 
   return (
     <section id="gallery">
@@ -35,9 +50,19 @@ export default function Gallery() {
 
       <div className="gallery-grid">
         {filtered.map((p) => (
-          <PaintingCard key={p.id} painting={p} />
+          <PaintingCard
+            key={p.id}
+            painting={p}
+            onClick={() => handlePaintingClick(p)}
+          />
         ))}
       </div>
+
+      <Lightbox
+        painting={selectedPainting}
+        isOpen={isLightboxOpen}
+        onClose={handleCloseLightbox}
+      />
     </section>
   );
 }
