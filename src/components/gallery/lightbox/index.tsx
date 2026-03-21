@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useCallback, useState, useRef } from "react";
+import { useEffect, useCallback, useState, useTransition } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { wordpressImageLoader } from "@/lib/image-loader";
 import type { Painting } from "@/types";
 
 interface LightboxProps {
@@ -18,10 +19,22 @@ interface LightboxProps {
  */
 export default function Lightbox({ painting, onClose }: LightboxProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const prevPaintingId = useRef<number | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [prevPaintingId, setPrevPaintingId] = useState<number | null>(null);
+  const [, startTransition] = useTransition();
 
   // Derive isOpen from painting - single source of truth
   const isOpen = painting !== null;
+
+  // Reset state when painting changes (pattern: storing previous props in state)
+  // This is React's recommended approach for "adjusting state based on props"
+  // See: https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  const paintingId = painting?.id ?? null;
+  if (paintingId !== prevPaintingId) {
+    setPrevPaintingId(paintingId);
+    setCurrentImageIndex(0);
+    setLoadedImages(new Set());
+  }
 
   // Build array of all images (featured + gallery)
   const allImages = painting
@@ -33,14 +46,15 @@ export default function Lightbox({ painting, onClose }: LightboxProps) {
 
   const hasMultipleImages = allImages.length > 1;
   const currentImage = allImages[currentImageIndex] ?? painting?.image;
+  const isImageLoading = currentImage ? !loadedImages.has(currentImage) : false;
 
-  // Reset image index when painting changes (using ref to avoid useEffect)
-  if (painting?.id !== prevPaintingId.current) {
-    prevPaintingId.current = painting?.id ?? null;
-    if (currentImageIndex !== 0) {
-      setCurrentImageIndex(0);
+  const handleImageLoad = useCallback(() => {
+    if (currentImage) {
+      startTransition(() => {
+        setLoadedImages((prev) => new Set(prev).add(currentImage));
+      });
     }
-  }
+  }, [currentImage]);
 
   const goToPrevious = useCallback(() => {
     setCurrentImageIndex(
@@ -163,6 +177,13 @@ export default function Lightbox({ painting, onClose }: LightboxProps) {
 
         {/* Image container */}
         <div className="lightbox-image-container">
+          {/* Loading spinner */}
+          {isImageLoading && currentImage && (
+            <div className="lightbox-loader">
+              <div className="lightbox-spinner" />
+            </div>
+          )}
+
           {/* Image */}
           {currentImage ? (
             <Image
@@ -172,6 +193,8 @@ export default function Lightbox({ painting, onClose }: LightboxProps) {
               sizes="(max-width: 768px) 100vw, 80vw"
               style={{ objectFit: "contain" }}
               priority
+              loader={wordpressImageLoader}
+              onLoad={handleImageLoad}
             />
           ) : (
             /* Gradient background - fallback when no image */

@@ -9,10 +9,10 @@ import type {
   Artwork,
 } from "./types";
 
-/** GraphQL query to fetch all artworks */
+/** GraphQL query to fetch artworks with pagination */
 const GET_ARTWORKS_QUERY = `
-  query GetArtworks {
-    artworks(first: 100) {
+  query GetArtworks($first: Int!, $after: String) {
+    artworks(first: $first, after: $after) {
       nodes {
         id
         databaseId
@@ -48,6 +48,10 @@ const GET_ARTWORKS_QUERY = `
             link
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -139,17 +143,46 @@ function transformArtwork(artwork: GraphQLArtwork, index: number): Artwork {
 }
 
 /**
- * Fetch all artworks from the GraphQL API
+ * Fetch a single page of artworks from the GraphQL API
+ * @param cursor - Pagination cursor (null for first page)
+ * @param pageSize - Number of items per page
+ * @returns Response with artworks and pagination info
+ */
+async function fetchArtworksPage(
+  cursor: string | null,
+  pageSize: number
+): Promise<GetArtworksResponse> {
+  return graphqlRequest<GetArtworksResponse>({
+    query: GET_ARTWORKS_QUERY,
+    variables: {
+      first: pageSize,
+      after: cursor,
+    },
+  });
+}
+
+/**
+ * Fetch all artworks from the GraphQL API with pagination
+ * Fetches all pages to ensure no artworks are missed
  * @returns Array of normalized artwork objects
  */
 export async function getArtworks(): Promise<Artwork[]> {
-  const response = await graphqlRequest<GetArtworksResponse>({
-    query: GET_ARTWORKS_QUERY,
-  });
+  const allArtworks: GraphQLArtwork[] = [];
+  let hasNextPage = true;
+  let cursor: string | null = null;
+  const pageSize = 50;
 
-  const artworks = response.data.artworks.nodes;
+  // Paginate through all artworks
+  while (hasNextPage) {
+    const response = await fetchArtworksPage(cursor, pageSize);
+    const { nodes, pageInfo } = response.data.artworks;
 
-  return artworks.map((artwork, index) => transformArtwork(artwork, index));
+    allArtworks.push(...nodes);
+    hasNextPage = pageInfo.hasNextPage;
+    cursor = pageInfo.endCursor;
+  }
+
+  return allArtworks.map((artwork, index) => transformArtwork(artwork, index));
 }
 
 /**
