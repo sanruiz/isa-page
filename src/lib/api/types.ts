@@ -75,11 +75,20 @@ export interface GraphQLArtwork {
   };
 }
 
+/** Pagination info from GraphQL */
+export interface PageInfo {
+  /** Whether there are more pages */
+  hasNextPage: boolean;
+  /** Cursor for next page */
+  endCursor: string | null;
+}
+
 /** GraphQL response structure for artworks query */
 export interface GetArtworksResponse {
   data: {
     artworks: {
       nodes: GraphQLArtwork[];
+      pageInfo: PageInfo;
     };
   };
 }
