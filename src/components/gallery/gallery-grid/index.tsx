@@ -1,62 +1,38 @@
-"use client";
-
-import { useState } from "react";
-import { paintings, series } from "@/constants/paintings";
-import PaintingCard from "@/components/gallery/painting-card";
-import Lightbox from "@/components/gallery/lightbox";
+import { getArtworks, getSeriesFromArtworks } from "@/lib/api";
 import type { Painting } from "@/types";
+import GalleryClient from "./gallery-client";
 
 /**
- * Gallery section with filterable painting grid
- * Client Component - uses filter state
+ * Gallery section that fetches artworks from GraphQL API
+ * Server Component - fetches data on the server
  */
-export default function Gallery() {
-  const [activeSeries, setActiveSeries] = useState("All");
-  const [selectedPainting, setSelectedPainting] = useState<Painting | null>(
-    null,
-  );
+export default async function Gallery() {
+  // Fetch artworks from GraphQL API
+  const artworks = await getArtworks();
 
-  const filtered =
-    activeSeries === "All"
-      ? paintings
-      : paintings.filter((p) => p.series === activeSeries);
+  // Transform API response to Painting type
+  const paintings: Painting[] = artworks.map((artwork) => ({
+    id: artwork.id,
+    title: artwork.title,
+    slug: artwork.slug,
+    series: artwork.series,
+    size: artwork.size,
+    medium: artwork.medium,
+    price: artwork.price,
+    artworkDate: artwork.artworkDate,
+    color: artwork.color,
+    accent: artwork.accent,
+    image: artwork.image,
+    galleryImages: artwork.galleryImages,
+    aspect: artwork.aspect,
+  }));
 
-  const handlePaintingClick = (painting: Painting) => {
-    setSelectedPainting(painting);
-  };
-
-  const handleCloseLightbox = () => {
-    setSelectedPainting(null);
-  };
+  // Get unique series from artworks
+  const series = getSeriesFromArtworks(artworks);
 
   return (
     <section id="gallery">
-      <div className="gallery-header">
-        <h2 className="gallery-title">Portfolio</h2>
-        <div className="filter-tabs">
-          {series.map((s) => (
-            <button
-              key={s}
-              className={`filter-tab ${activeSeries === s ? "active" : ""}`}
-              onClick={() => setActiveSeries(s)}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="gallery-grid">
-        {filtered.map((p) => (
-          <PaintingCard
-            key={p.id}
-            painting={p}
-            onClick={() => handlePaintingClick(p)}
-          />
-        ))}
-      </div>
-
-      <Lightbox painting={selectedPainting} onClose={handleCloseLightbox} />
+      <GalleryClient artworks={paintings} series={series} />
     </section>
   );
 }
