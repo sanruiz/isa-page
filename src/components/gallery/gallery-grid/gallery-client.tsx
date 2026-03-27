@@ -38,6 +38,10 @@ export default function GalleryClient({
     setSelectedPainting(null);
   };
 
+  const handleNavigatePainting = (painting: Painting) => {
+    setSelectedPainting(painting);
+  };
+
   return (
     <>
       <div className="gallery-header">
@@ -65,7 +69,12 @@ export default function GalleryClient({
         ))}
       </div>
 
-      <Lightbox painting={selectedPainting} onClose={handleCloseLightbox} />
+      <Lightbox
+        painting={selectedPainting}
+        allPaintings={filtered}
+        onClose={handleCloseLightbox}
+        onNavigate={handleNavigatePainting}
+      />
     </>
   );
 }
