@@ -123,37 +123,48 @@ export default function Lightbox({
     onNavigate(allPaintings[nextIndex]);
   }, [canNavigatePaintings, currentPaintingIndex, allPaintings, onNavigate]);
 
+  // Smart navigation: navigate images first, then paintings at boundaries
+  const handlePrevious = useCallback(() => {
+    if (hasMultipleImages && currentImageIndex > 0) {
+      // Navigate to previous image within current painting
+      goToPrevious();
+    } else if (canNavigatePaintings) {
+      // At first image, go to previous painting
+      goToPreviousPainting();
+    } else if (hasMultipleImages) {
+      // Loop within images if no painting navigation
+      goToPrevious();
+    }
+  }, [hasMultipleImages, currentImageIndex, canNavigatePaintings, goToPrevious, goToPreviousPainting]);
+
+  const handleNext = useCallback(() => {
+    if (hasMultipleImages && currentImageIndex < allImages.length - 1) {
+      // Navigate to next image within current painting
+      goToNext();
+    } else if (canNavigatePaintings) {
+      // At last image, go to next painting
+      goToNextPainting();
+    } else if (hasMultipleImages) {
+      // Loop within images if no painting navigation
+      goToNext();
+    }
+  }, [hasMultipleImages, currentImageIndex, allImages.length, canNavigatePaintings, goToNext, goToNextPainting]);
+
   // Handle escape key to close and arrow keys for navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
-      // Arrow keys navigate between paintings (main navigation)
+      // Arrow keys: navigate images first, then paintings at boundaries
       if (e.key === "ArrowRight") {
-        if (canNavigatePaintings) {
-          goToNextPainting();
-        } else if (hasMultipleImages) {
-          goToNext();
-        }
+        handleNext();
       }
       if (e.key === "ArrowLeft") {
-        if (canNavigatePaintings) {
-          goToPreviousPainting();
-        } else if (hasMultipleImages) {
-          goToPrevious();
-        }
+        handlePrevious();
       }
     },
-    [
-      onClose,
-      canNavigatePaintings,
-      hasMultipleImages,
-      goToNext,
-      goToPrevious,
-      goToNextPainting,
-      goToPreviousPainting,
-    ],
+    [onClose, handleNext, handlePrevious],
   );
 
   // Handle body scroll lock
@@ -205,17 +216,13 @@ export default function Lightbox({
           </svg>
         </button>
 
-        {/* Navigation buttons - navigate between paintings or images */}
+        {/* Navigation buttons - navigate images first, then paintings */}
         {(canNavigatePaintings || hasMultipleImages) && (
           <>
             <button
               className="lightbox-nav lightbox-nav-prev"
-              onClick={
-                canNavigatePaintings ? goToPreviousPainting : goToPrevious
-              }
-              aria-label={
-                canNavigatePaintings ? "Previous painting" : "Previous image"
-              }
+              onClick={handlePrevious}
+              aria-label="Previous"
             >
               <svg
                 width="24"
@@ -232,8 +239,8 @@ export default function Lightbox({
             </button>
             <button
               className="lightbox-nav lightbox-nav-next"
-              onClick={canNavigatePaintings ? goToNextPainting : goToNext}
-              aria-label={canNavigatePaintings ? "Next painting" : "Next image"}
+              onClick={handleNext}
+              aria-label="Next"
             >
               <svg
                 width="24"
@@ -285,19 +292,20 @@ export default function Lightbox({
           )}
         </div>
 
-        {/* Painting counter - shows position in gallery */}
-        {canNavigatePaintings && (
-          <div className="lightbox-counter">
-            {currentPaintingIndex + 1} / {allPaintings.length}
-          </div>
-        )}
-
-        {/* Image counter - shows position within single painting's images */}
-        {!canNavigatePaintings && hasMultipleImages && (
-          <div className="lightbox-counter">
-            {currentImageIndex + 1} / {allImages.length}
-          </div>
-        )}
+        {/* Counter - shows painting position and image position when applicable */}
+        <div className="lightbox-counter">
+          {canNavigatePaintings && (
+            <span>{currentPaintingIndex + 1} / {allPaintings.length}</span>
+          )}
+          {canNavigatePaintings && hasMultipleImages && (
+            <span className="lightbox-counter-separator"> · </span>
+          )}
+          {hasMultipleImages && (
+            <span className="lightbox-counter-images">
+              img {currentImageIndex + 1}/{allImages.length}
+            </span>
+          )}
+        </div>
 
         {/* Info panel */}
         <div className="lightbox-info">
