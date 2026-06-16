@@ -184,7 +184,7 @@ export default function Lightbox({
 
   if (!isOpen || !painting) return null;
 
-  const { title, series, medium, size, color, accent } = painting;
+  const { title, series, medium, size, color, accent, sold } = painting;
 
   return (
     <div
@@ -295,7 +295,9 @@ export default function Lightbox({
         {/* Counter - shows painting position and image position when applicable */}
         <div className="lightbox-counter">
           {canNavigatePaintings && (
-            <span>{currentPaintingIndex + 1} / {allPaintings.length}</span>
+            <span>
+              {currentPaintingIndex + 1} / {allPaintings.length}
+            </span>
           )}
           {canNavigatePaintings && hasMultipleImages && (
             <span className="lightbox-counter-separator"> · </span>
@@ -313,6 +315,7 @@ export default function Lightbox({
           <div className="lightbox-title">{title}</div>
           <div className="lightbox-meta">
             {medium} · {size}
+            {sold && <span className="lightbox-sold-badge">Sold</span>}
           </div>
         </div>
       </div>

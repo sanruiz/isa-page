@@ -21,6 +21,7 @@ const GET_ARTWORKS_QUERY = `
         size
         medium
         price
+        sold
         artworkDate
         featuredImage {
           node {
@@ -113,7 +114,8 @@ function formatSize(size: string): string {
  * @returns Normalized artwork object
  */
 function transformArtwork(artwork: GraphQLArtwork, index: number): Artwork {
-  const { databaseId, title, slug, size, medium, price, artworkDate } = artwork;
+  const { databaseId, title, slug, size, medium, price, sold, artworkDate } =
+    artwork;
 
   // Get colors based on index (cycles through default colors)
   const colorSet = DEFAULT_COLORS[index % DEFAULT_COLORS.length];
@@ -133,6 +135,7 @@ function transformArtwork(artwork: GraphQLArtwork, index: number): Artwork {
     size: formatSize(size),
     medium: medium || "Oil on canvas",
     price: price ? parseFloat(price) : null,
+    sold: sold ?? false,
     artworkDate: artworkDate || "",
     image,
     galleryImages: artwork.galleryImages || [],

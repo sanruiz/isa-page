@@ -20,7 +20,7 @@ export default function PaintingCard({
   isWide = false,
   onClick,
 }: PaintingCardProps) {
-  const { title, series, medium, size, color, accent, image, aspect } =
+  const { title, series, medium, size, color, accent, image, aspect, sold } =
     painting;
 
   // Determine CSS class based on aspect ratio
@@ -79,6 +79,12 @@ export default function PaintingCard({
           }
           className="object-cover"
         />
+      )}
+      {/* Sold badge */}
+      {sold && (
+        <span className="painting-sold-badge" aria-label="Sold">
+          Sold
+        </span>
       )}
       <div className="painting-overlay">
         <div className="painting-series">{series}</div>

@@ -24,6 +24,7 @@ export default async function Gallery() {
       size: artwork.size,
       medium: artwork.medium,
       price: artwork.price,
+      sold: artwork.sold,
       artworkDate: artwork.artworkDate,
       color: artwork.color,
       accent: artwork.accent,

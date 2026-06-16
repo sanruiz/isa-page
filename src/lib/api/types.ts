@@ -59,6 +59,8 @@ export interface GraphQLArtwork {
   medium: string;
   /** Price as string */
   price: string;
+  /** Whether the artwork has been sold */
+  sold: boolean;
   /** Creation date (ISO format) */
   artworkDate: string;
   /** Featured/main image */
@@ -109,6 +111,8 @@ export interface Artwork {
   medium: string;
   /** Price as number (null if not set) */
   price: number | null;
+  /** Whether the artwork has been sold */
+  sold: boolean;
   /** Creation date */
   artworkDate: string;
   /** Main image URL */

@@ -18,6 +18,8 @@ export interface Painting {
   medium: string;
   /** Price (null if not set) */
   price?: number | null;
+  /** Whether the artwork has been sold */
+  sold?: boolean;
   /** Creation date */
   artworkDate?: string;
   /** Primary background color (hex) - used as fallback when no image */
