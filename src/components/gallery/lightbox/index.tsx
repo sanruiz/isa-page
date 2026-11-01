@@ -3,7 +3,6 @@
 import { useEffect, useCallback, useState, useTransition } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { wordpressImageLoader } from "@/lib/image-loader";
 import type { Painting } from "@/types";
 
 interface LightboxProps {
@@ -81,12 +80,7 @@ export default function Lightbox({
     adjacentPaintings.forEach((p) => {
       if (p.image) {
         const img = new window.Image();
-        // Use the same loader to preload the optimized version
-        img.src = wordpressImageLoader({
-          src: p.image,
-          width: 1600,
-          quality: 80,
-        });
+        img.src = p.image;
       }
     });
   }, [isOpen, getAdjacentPaintings]);
@@ -278,7 +272,6 @@ export default function Lightbox({
                 objectFit: "contain",
               }}
               priority
-              loader={wordpressImageLoader}
               onLoad={handleImageLoad}
             />
           ) : (

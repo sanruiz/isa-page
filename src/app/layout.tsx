@@ -3,6 +3,9 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://isaartstudio.com",
+  ),
   title: "Isabella Ramírez | Visual Artist",
   description:
     "Painting the quiet intensity of flowers, memory, and the natural world — one brushstroke at a time.",

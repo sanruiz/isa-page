@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
         hostname: "web.isaartstudio.com",
         pathname: "/wp-content/uploads/**",
       },
-      {
-        protocol: "https",
-        hostname: "wsrv.nl",
-      },
     ],
   },
 };
