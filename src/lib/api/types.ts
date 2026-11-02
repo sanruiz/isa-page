@@ -85,6 +85,38 @@ export interface PageInfo {
   endCursor: string | null;
 }
 
+/** Raw exhibition data from GraphQL response */
+export interface GraphQLExhibition {
+  /** Base64 encoded global ID */
+  id: string;
+  /** WordPress database ID */
+  databaseId: number;
+  /** Exhibition title */
+  title: string;
+  /** URL-friendly slug */
+  slug: string;
+  /** Year of the exhibition */
+  year: number;
+  /** Month abbreviation (e.g., "Aug"), or empty if unknown */
+  month: string;
+  /** Venue name and address */
+  venue: string;
+  /** City, province/state, and country */
+  location: string;
+  /** Additional gallery images */
+  galleryImages: GalleryImage[];
+}
+
+/** GraphQL response structure for exhibitions query */
+export interface GetExhibitionsResponse {
+  data: {
+    exhibitions: {
+      nodes: GraphQLExhibition[];
+      pageInfo: PageInfo;
+    };
+  };
+}
+
 /** GraphQL response structure for artworks query */
 export interface GetArtworksResponse {
   data: {

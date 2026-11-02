@@ -5,4 +5,5 @@
 
 export * from "./client";
 export * from "./artworks";
+export * from "./exhibitions";
 export * from "./types";
