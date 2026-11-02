@@ -3,8 +3,6 @@ import type { Exhibition } from "@/types";
 // Re-export types for backward compatibility
 export type { Painting, Exhibition } from "@/types";
 
-export * from "./paintings";
-
 export const exhibitions: Exhibition[] = [
   {
     year: 2026,
@@ -12,7 +10,6 @@ export const exhibitions: Exhibition[] = [
     title: "Then, Now and Again",
     venue: "Gagne Contemporary",
     location: "Toronto, ON, Canada",
-    isUpcoming: true,
   },
   {
     year: 2026,
@@ -20,7 +17,6 @@ export const exhibitions: Exhibition[] = [
     title: "Solo show",
     venue: "Remote Gallery",
     location: "Toronto, ON, Canada",
-    isUpcoming: true,
   },
 
   {
@@ -29,7 +25,6 @@ export const exhibitions: Exhibition[] = [
     title: "Artist Project Fair",
     venue: "Better Living Centre",
     location: "Toronto, ON, Canada",
-    isUpcoming: true,
   },
   {
     year: 2025,

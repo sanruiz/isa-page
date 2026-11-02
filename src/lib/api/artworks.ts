@@ -174,11 +174,22 @@ export async function getArtworks(): Promise<Artwork[]> {
   let hasNextPage = true;
   let cursor: string | null = null;
   const pageSize = 50;
+  const seenCursors = new Set<string>();
 
   // Paginate through all artworks
   while (hasNextPage) {
     const response = await fetchArtworksPage(cursor, pageSize);
     const { nodes, pageInfo } = response.data.artworks;
+
+    if (pageInfo.hasNextPage) {
+      const nextCursor = pageInfo.endCursor;
+      if (!nextCursor || seenCursors.has(nextCursor)) {
+        throw new Error(
+          "Artwork pagination returned a missing or repeated cursor.",
+        );
+      }
+      seenCursors.add(nextCursor);
+    }
 
     allArtworks.push(...nodes);
     hasNextPage = pageInfo.hasNextPage;

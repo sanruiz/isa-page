@@ -7,6 +7,14 @@
 > The agent MUST follow these rules when working on issues in this repository.
 > This file should be placed at the project root per Vercel recommendations.
 
+## Project Context
+
+- This is a personal project; it is not connected to Jira and does not use Jira ticket prefixes or Jira-based workflows.
+- Use concise Conventional Commit messages such as `feat: ...`, `fix: ...`, or `docs: ...`. Branch names should describe the work and do not need a ticket ID.
+- The site is hosted on Vercel and connected to Git. Pushes follow the Vercel project configuration: non-production branches create Preview Deployments, while the configured production branch creates a Production Deployment.
+- Use Vercel's deployment checks and build status as the CI source of truth for this site. Do not use the AWS fleet workflow for this project.
+- Standing authorization: routine Git read and write commands in this repository, including staging, committing, and pushing to its configured `origin`, do not require repeated confirmation. This does not authorize force-pushes, history rewrites, or operations against another repository.
+
 ---
 
 ## 📚 Project Documentation Index
@@ -137,18 +145,17 @@ import { myFunction } from '@/lib/my-module';
 
 | Type | Format |
 |------|--------|
-| **Commit** | `JIRA-XXX: Brief description` (e.g., `WEB-123: Add user authentication`) |
+| **Commit** | Conventional Commit, e.g. `fix: improve lightbox focus handling` |
 | **Types** | `feat` • `fix` • `docs` • `refactor` • `test` • `chore` |
-| **Branch** | `feature/JIRA-XXX-description` • `bugfix/JIRA-XXX-description` |
+| **Branch** | Descriptive names such as `feature/mobile-navigation` or `fix/gallery-pagination` |
 
-> ⚠️ **CRITICAL**: Always include the Jira ticket prefix in commits. Never commit without it.
+Jira prefixes and ticket-linked branch names do not apply to this personal project.
 
 ---
 
 ## 🚦 Pre-commit Quality Gates (MANDATORY)
 
-> **CRITICAL**: Before pushing code or creating a PR to protected branches (`dev`, `staging`, `master`, `main`),
-> you MUST complete ALL quality checks. This prevents failed pipelines and broken builds.
+> Before pushing to the configured Vercel production branch, complete the quality checks below. Feature-branch pushes create Vercel Preview Deployments according to the project's Git settings.
 
 ### Required Checks Before Push/PR
 
@@ -162,19 +169,18 @@ import { myFunction } from '@/lib/my-module';
 ### Quality Checklist
 
 ```
-Before ANY push to dev/staging/main:
+Before a production deployment:
 □ All TypeScript errors resolved
 □ All ESLint warnings addressed  
 □ All unit tests passing locally
 □ Build completes without errors
 □ No console.log() left in code
-□ Commit message has Jira prefix (e.g., WEB-123: ...)
 ```
 
 ### Why This Matters
 
-- ❌ **Without local testing** → Failed CI/CD pipelines → Wasted time & resources
-- ✅ **With local testing** → Clean pipelines → Faster deployments
+- Vercel builds deployments from the configured Git branch and reports deployment checks in its dashboard.
+- Run the listed local checks before promoting changes to the production branch.
 
 📄 **Testing details:** `.github/instructions/tests.instructions.md`
 📄 **Testing patterns:** `.github/skills/testing-patterns/SKILL.md`

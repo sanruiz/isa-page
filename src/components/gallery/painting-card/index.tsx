@@ -36,7 +36,11 @@ export default function PaintingCard({
   return (
     <div
       className={cn("painting-card", aspectClass)}
-      onClick={onClick}
+      onClick={(event) => {
+        if (!onClick) return;
+        event.currentTarget.focus();
+        onClick();
+      }}
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
       onKeyDown={

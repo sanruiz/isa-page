@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useCallback, useState, useTransition } from "react";
+import {
+  useEffect,
+  useCallback,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { Painting } from "@/types";
@@ -30,6 +36,9 @@ export default function Lightbox({
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [prevPaintingId, setPrevPaintingId] = useState<number | null>(null);
   const [, startTransition] = useTransition();
+  const lightboxContentRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
 
   // Derive isOpen from painting - single source of truth
   const isOpen = painting !== null;
@@ -150,6 +159,35 @@ export default function Lightbox({
       if (e.key === "Escape") {
         onClose();
       }
+
+      if (e.key === "Tab") {
+        const focusableElements =
+          lightboxContentRef.current?.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          );
+        const firstElement = focusableElements?.[0];
+        const lastElement = focusableElements?.[focusableElements.length - 1];
+
+        if (!firstElement || !lastElement) {
+          e.preventDefault();
+          lightboxContentRef.current?.focus();
+        } else if (
+          e.shiftKey &&
+          (document.activeElement === firstElement ||
+            !lightboxContentRef.current?.contains(document.activeElement))
+        ) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (
+          !e.shiftKey &&
+          (document.activeElement === lastElement ||
+            !lightboxContentRef.current?.contains(document.activeElement))
+        ) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+
       // Arrow keys: navigate images first, then paintings at boundaries
       if (e.key === "ArrowRight") {
         handleNext();
@@ -160,6 +198,23 @@ export default function Lightbox({
     },
     [onClose, handleNext, handlePrevious],
   );
+
+  // Move focus into the dialog and return it to the trigger when the dialog closes.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const activeElement = document.activeElement;
+    previouslyFocusedElementRef.current =
+      activeElement instanceof HTMLElement && activeElement !== document.body
+        ? activeElement
+        : null;
+    closeButtonRef.current?.focus();
+
+    return () => {
+      previouslyFocusedElementRef.current?.focus();
+      previouslyFocusedElementRef.current = null;
+    };
+  }, [isOpen]);
 
   // Handle body scroll lock
   useEffect(() => {
@@ -188,9 +243,15 @@ export default function Lightbox({
       aria-modal="true"
       aria-label={`Painting: ${title}`}
     >
-      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={lightboxContentRef}
+        className="lightbox-content"
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
+          ref={closeButtonRef}
           className="lightbox-close"
           onClick={onClose}
           aria-label="Close lightbox"

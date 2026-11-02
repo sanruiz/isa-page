@@ -12,6 +12,4 @@ export interface Exhibition {
   venue: string;
   /** City, province/state, and country */
   location: string;
-  /** Whether the exhibition is upcoming (optional, calculated dynamically) */
-  isUpcoming?: boolean;
 }

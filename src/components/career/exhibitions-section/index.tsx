@@ -4,10 +4,13 @@
  */
 
 import { exhibitions } from "@/constants";
-import UpcomingBadgeClient from "./upcoming-badge-client";
 import type { Exhibition } from "@/types";
 
 export default function ExhibitionsSection() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
   return (
     <section id="exhibitions" className="exhibitions-section">
       <div className="exhibitions-header">
@@ -18,10 +21,15 @@ export default function ExhibitionsSection() {
       </div>
       <div className="exhibitions-grid">
         {exhibitions.map((exhibition: Exhibition, index) => {
-          // Use the stable, developer-provided `isUpcoming` flag for SSR output.
-          // If `isUpcoming` is undefined, defer the time-based computation to the
-          // client-only component to avoid SSR/CSR hydration mismatches.
-          const { isUpcoming } = exhibition;
+          const parsedMonth = exhibition.month
+            ? new Date(`${exhibition.month} 1, 2000`)
+            : null;
+          const isUpcoming =
+            parsedMonth !== null &&
+            !Number.isNaN(parsedMonth.getTime()) &&
+            (exhibition.year > currentYear ||
+              (exhibition.year === currentYear &&
+                parsedMonth.getMonth() >= currentMonth));
 
           return (
             <article key={index} className="exhibition-card">
@@ -37,16 +45,9 @@ export default function ExhibitionsSection() {
                   {exhibition.venue} · {exhibition.location}
                 </p>
 
-                {isUpcoming ? (
-                  // Stable server-rendered badge when data explicitly marks it upcoming
+                {isUpcoming && (
                   <span className="exhibition-badge">Upcoming</span>
-                ) : exhibition.isUpcoming === undefined ? (
-                  // Defer dynamic, time-based decision to a client-only component
-                  <UpcomingBadgeClient
-                    year={exhibition.year}
-                    month={exhibition.month}
-                  />
-                ) : null}
+                )}
               </div>
             </article>
           );

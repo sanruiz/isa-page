@@ -1,6 +1,8 @@
 # Paintings Directory
 
-This directory contains all painting images for the gallery.
+This directory contains local painting images retained in the repository. The
+gallery currently loads artwork data and images from WordPress, so adding a file
+here alone will not add it to the website.
 
 ## Naming Convention
 
@@ -38,22 +40,10 @@ Use **kebab-case** for all painting image files:
 - **Format**: PNG for best quality, WebP for optimization
 - **Color profile**: sRGB for web display
 
-## Adding New Paintings
+## Adding Local Images
 
-1. Add the image file following the naming convention above
-2. Update `src/constants/paintings.ts` with the painting data:
-   ```typescript
-   {
-     id: [next-id],
-     title: "Painting Title",
-     series: "Series Name",
-     size: "16×20 in",
-     medium: "Oil on canvas",
-     color: "#hexcolor",  // fallback background color
-     accent: "#hexcolor", // accent color
-     image: "/paintings/painting-title.png",
-   }
-   ```
+Add the image file following the naming convention above. To add or update an
+artwork on the website, manage its artwork data and images in WordPress.
 
 ## Current Paintings
 

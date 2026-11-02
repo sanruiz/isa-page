@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface NavbarProps {
   /** Override scroll detection with a fixed value */
@@ -13,6 +13,13 @@ interface NavbarProps {
  */
 export default function Navbar({ scrolled: scrolledProp }: NavbarProps) {
   const [scrolled, setScrolled] = useState(scrolledProp ?? false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+
+  const handleNavigationClick = () => {
+    setIsMenuOpen(false);
+    menuToggleRef.current?.focus();
+  };
 
   useEffect(() => {
     if (scrolledProp !== undefined) return;
@@ -23,19 +30,39 @@ export default function Navbar({ scrolled: scrolledProp }: NavbarProps) {
   }, [scrolledProp]);
 
   return (
-    <nav className={scrolled ? "scrolled" : ""}>
+    <nav className={scrolled ? "scrolled" : ""} aria-label="Main navigation">
       <a href="#" className="nav-logo">
         Isabella Ramírez
       </a>
-      <ul className="nav-links">
+      <button
+        ref={menuToggleRef}
+        type="button"
+        className="nav-menu-toggle"
+        aria-expanded={isMenuOpen}
+        aria-controls="primary-navigation-links"
+        aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+        onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+      >
+        <span aria-hidden="true">{isMenuOpen ? "×" : "☰"}</span>
+      </button>
+      <ul
+        id="primary-navigation-links"
+        className={`nav-links${isMenuOpen ? " open" : ""}`}
+      >
         <li>
-          <a href="#gallery">Works</a>
+          <a href="#gallery" onClick={handleNavigationClick}>
+            Works
+          </a>
         </li>
         <li>
-          <a href="#about">About</a>
+          <a href="#about" onClick={handleNavigationClick}>
+            About
+          </a>
         </li>
         <li>
-          <a href="#contact">Contact</a>
+          <a href="#contact" onClick={handleNavigationClick}>
+            Contact
+          </a>
         </li>
       </ul>
     </nav>

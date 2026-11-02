@@ -2,6 +2,13 @@
 
 This file contains project-wide instructions for GitHub Copilot.
 
+## Project-Specific Workflow
+
+- This is a personal project with no Jira project or ticket workflow. Jira IDs and Jira commit prefixes are not required.
+- Use Conventional Commit messages such as `feat: ...`, `fix: ...`, or `docs: ...`; use descriptive branch names without ticket IDs.
+- The site is hosted on Vercel through Git integration. Branch pushes follow the Vercel project's settings: preview deployments for non-production branches and production deployment for the configured production branch.
+- Vercel deployment checks are the CI source of truth. Jira-specific prompt templates in `.github/prompts/` are optional templates for other projects and do not apply here unless the user explicitly requests Jira work.
+
 ## 🔄 Copilot Agent Workflow for Complex Tasks
 
 When implementing new features, refactoring code, or fixing complex issues, **always follow this systematic workflow**:
@@ -21,7 +28,7 @@ When implementing new features, refactoring code, or fixing complex issues, **al
    - Phase breakdown if complex
 2. **Add action plan** - Detailed step-by-step implementation guide
 3. **Create TODO list** - Use `manage_todo_list` tool to track all phases
-4. **Commit planning** - `git commit -m "PROJECT-XXX: Add [feature] implementation plan"`
+4. **Commit planning** - `git commit -m "docs: add [feature] implementation plan"`
 
 ### Phase 3: Implementation by Phases
 For each phase:
@@ -30,13 +37,13 @@ For each phase:
 3. **Write/update tests** - Add unit tests, ensure regression tests pass
 4. **Run tests** - `npm test` to verify no regressions
 5. **Mark TODO as completed** - Update status after successful implementation
-6. **Commit phase** - `git commit -m "PROJECT-XXX: Implement [feature] - Phase N"`
+6. **Commit phase** - `git commit -m "feat: implement [feature] - phase N"`
 
 ### Phase 4: Final Documentation
 1. **Create final documentation** - `docs/[feature-name].md`
 2. **Update related docs** - Update `project-overview.md`, `readme.md`, etc.
 3. **Delete planning docs** - Remove temporary planning documents
-4. **Final commit** - `git commit -m "PROJECT-XXX: Add [feature] documentation"`
+4. **Final commit** - `git commit -m "docs: add [feature] documentation"`
 
 ### Key Principles
 - ✅ **One commit per phase** - Create clear checkpoint commits
